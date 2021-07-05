@@ -1,6 +1,6 @@
 # Airline-Club-Bot
 
-##To install
+## To install
 
 1. Install nodejs (12 or higher) and npm
 2. Clone this repo

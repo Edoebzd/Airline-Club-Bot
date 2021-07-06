@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const verifiedRoleName = "Test role"
 
 module.exports.run = async (bot, message, args) => {
+  /*
   if(!args[0]) return message.channel.send("Please provide your airline name.")
   message.channel.send("Loading...").then(serverMessage => {
     var airlineId = -1
@@ -49,6 +50,8 @@ module.exports.run = async (bot, message, args) => {
       })
     })
   })
+  */
+  message.channel.send("Command on maintenance.")
 };
 
 module.exports.info = {

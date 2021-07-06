@@ -9,11 +9,11 @@ axios.interceptors.request.use(function (config) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function init(){
-  var loginAuth = "Basic "+config.loginBTOA
+  /*var loginAuth = "Basic "+config.loginBTOA
   login(loginAuth).then(() => {
     getAirports()
     loadAirlines()
-  })
+  })*/
 };
 
 var airports = []

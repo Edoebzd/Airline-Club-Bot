@@ -74,7 +74,7 @@ module.exports.run = async (bot, message, args) => {
 module.exports.info = {
   name: 'verify',
   description: 'Starts the verification process',
-  usage: ' ',
+  usage: '[Airline Name]',
   category: 'verification',
   accessableby: 'Anyone',
   aliases: []

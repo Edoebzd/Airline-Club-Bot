@@ -22,8 +22,8 @@ module.exports.run = async (bot, message, args) => {
   });
 
   setTimeout(() => {
-    message.delete().catch(console.log("Cannnot delete [reload.js@25]"))
-    serverMessage.delete().catch(console.log("Cannnot delete [reload.js@26]"))
+    message.delete()
+    serverMessage.delete()
   }, 5000);
 };
 

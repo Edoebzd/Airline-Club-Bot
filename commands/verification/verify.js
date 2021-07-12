@@ -38,11 +38,11 @@ module.exports.run = async (bot, message, args) => {
           message.author.send("Loading...").then(m => {
             init.updateAirlines().then(airlines => {
               if(airlines[airlineId].slogan==randomString) {
-                message.member.roles.add(message.guild.roles.cache.find(role => role.name == verifiedRoleName), "Automatic verification").catch(err => console.log("33" + err))
+                message.member.roles.add(message.guild.roles.cache.find(role => role.name == verifiedRoleName), "Automatic verification")
                 .then(() => {
-                  m.edit("Verified successfully as "+airlines[airlineId].name+". You can now change back your airline slogan.").catch(err => console.log("35" + err))
+                  m.edit("Verified successfully as "+airlines[airlineId].name+". You can now change back your airline slogan.")
                   console.log(message.author.id + "-" + airlineId)
-                  message.guild.channels.cache.get("863069139148341279").send(message.author.tag+" Verified as "+airlines[airlineId].name).catch(err => console.log("37" + err))
+                  message.guild.channels.cache.get("863069139148341279").send(message.author.tag+" Verified as "+airlines[airlineId].name)
                   message.delete()
                   serverMessage.delete()
                 }).catch(err => {
@@ -51,6 +51,8 @@ module.exports.run = async (bot, message, args) => {
                 })
               } else {
                 m.edit("Verification failed. Please try again. If you think this is an error contact a staff member.")
+                message.delete()
+                serverMessage.delete()
               }
             })
           })

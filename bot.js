@@ -47,3 +47,11 @@ client.on('message', async message => {
   if(commandfile) commandfile.run(client, message, args);
 
 });
+
+client.on('guildMemberAdd', member => {
+  member.guild.channels.cache.get("863069139148341279").send(member.user.tag + " joined.")
+})
+
+client.on('guildMemberRemove', member => {
+  member.guild.channels.cache.get("863069139148341279").send(member.user.tag + " left.")
+})

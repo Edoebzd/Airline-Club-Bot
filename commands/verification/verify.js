@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 const verifiedRoleName = "Verified"
 
-module.exports.run = async (bot, message, args, db) => {
+module.exports.run = async (bot, message, args, permissionLevel, db) => {
   try {
     if(!message.guild) return message.channel.send("Cannot use this command in direct messages")
     if(!message.channel.id == 862058301704503296) return message.reply("Cannot use this command in this channel").then(m => {setTimeout(() => {message.delete(); m.delete()}, 10000)})
@@ -45,6 +45,7 @@ module.exports.run = async (bot, message, args, db) => {
                   m.edit("Verified successfully as "+airlines[airlineId].name+". You can now change back your airline slogan.")
                   console.log(message.author.id + "-" + airlineId)
                   dbUser.airlineId.push(airlineId)
+                  if(dbUser.permissionLevel < 10) dbUser.permissionLevel = 10
                   dbUser.save()
                   message.guild.channels.cache.get("863069139148341279").send(message.author.tag+" Verified as "+airlines[airlineId].name)
                   message.delete()

@@ -1,8 +1,8 @@
 const { readdirSync } = require('fs');
 const { join } = require('path');
 var serverMessage
-module.exports.run = async (bot, message, args) => {
-  if(message.author.id != 253877182739382274) return message.channel.send("You can't use this command.").then(m => serverMessage = m)
+module.exports.run = async (bot, message, args, permissionLevel) => {
+  if(permissionLevel < 99) return message.channel.send("You can't use this command.").then(m => serverMessage = m)
   if(!args[0]) return message.channel.send('Please provide a command to reload!').then(m => serverMessage = m);
   const commandName = args[0].toLowerCase();
   if(!bot.commands.get(commandName)) return message.channel.send('That command doesn\'t exist. Try again.').then(m => serverMessage = m);

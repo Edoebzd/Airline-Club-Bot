@@ -1,5 +1,5 @@
-module.exports.run = async (bot, message, args) => {
-  if(message.author.id != 253877182739382274) return message.channel.send("You can't use this command.")
+module.exports.run = async (bot, message, args, permissionLevel) => {
+  if(permissionLevel < 99) return message.channel.send("You can't use this command.")
   message.channel.send("Restarting the bot...").then(k => process.exit(0))
 };
 

@@ -11,7 +11,8 @@ const userSchema = new Schema({
   airlineId: [Number],
   nickname: String,
   patreon: Boolean,
-  admin: Boolean
+  admin: Boolean,
+  permissionLevel: Number  //0 = default, 10 = verified, 50 = admin, 70 = superAdmin, 90 = Game Dev, 99 = Bot Dev
 })
 
 const users = mongoose.model("Users", userSchema)

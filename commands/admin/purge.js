@@ -1,5 +1,5 @@
-module.exports.run = async (bot, message, args) => {
-  if(!(message.author.id == 102949678185738240 || message.author.id == 222924725075050497 || message.author.id == 253877182739382274)) return message.channel.send("You can't use this command.").then(m => setTimeout(() => {m.delete(); message.delete()}, 5000))
+module.exports.run = async (bot, message, args, permissionLevel) => {
+  if(permissionLevel < 50) return message.channel.send("You can't use this command.").then(m => setTimeout(() => {m.delete(); message.delete()}, 5000))
   if(!args[0]) return message.channel.send("Please provide the number of messages to delete.").then(m => setTimeout(() => {m.delete(); message.delete()}, 5000))
   if(args[0] > 100) return message.channel.send("You can't delete more than 100 messages.").then(m => setTimeout(() => {m.delete(); message.delete()}, 5000))
   message.channel.messages.fetch({ limit: parseInt(args[0])+1 }).then(messages => {

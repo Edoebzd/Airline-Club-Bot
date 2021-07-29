@@ -39,13 +39,18 @@ client.on('message', async message => {
   if(message.author.bot) return;
   if(!message.content.startsWith(client.prefix)) return;
 
+  let dbUser = await db.users.findOne({discordId: message.author.id})
+  let permissionLevel
+  if(!dbUser.permissionLevel) permissionLevel = 0
+  else permissionLevel = dbUser.permissionLevel
+  
   const args = message.content.slice(client.prefix.length).trim().split(/ +/g);
   const cmd = args.shift().toLowerCase();
 
   console.log(Date.now() + "-" + message.author.id + "-" + cmd + "-" + args)
 
   const commandfile = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-  if(commandfile) commandfile.run(client, message, args, db);
+  if(commandfile) commandfile.run(client, message, args, permissionLevel, db);
 
 });
 

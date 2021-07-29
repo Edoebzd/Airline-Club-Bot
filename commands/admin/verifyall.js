@@ -1,5 +1,5 @@
-module.exports.run = async (bot, message, args) => {
-  if(!(message.author.id == 102949678185738240 || message.author.id == 222924725075050497)) return message.channel.send("You can't use this command.")
+module.exports.run = async (bot, message, args, permissionLevel) => {
+  if(permissionLevel < 70) return message.channel.send("You can't use this command.")
   var total = 0
   var total2 = 0
   message.guild.members.fetch().then(members => { members.forEach(member => {

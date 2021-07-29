@@ -1,5 +1,5 @@
 const init = require('../../init.js');
-module.exports.run = async (bot, message, args, db) => {
+module.exports.run = async (bot, message, args, permissionLevel, db) => {
   if(!(message.author.id == 102949678185738240 || message.author.id == 222924725075050497 || message.author.id == 253877182739382274)) return message.channel.send("You can't use this command.").then(m => deleteMessage(m, message))
   if(!args[0]) return message.channel.send("Please provide a valid discord user Id.").then(m => deleteMessage(m, message))
   if(!args[1]) return message.channel.send("Please provide a valid airline name.").then(m => deleteMessage(m, message))
@@ -24,6 +24,7 @@ module.exports.run = async (bot, message, args, db) => {
   if(dbUser.airlineId.indexOf(airlineId) != -1) message.channel.send("User already verified with airline '"+airlineName+"'").then(m => deleteMessage(m, message))
   else {
     dbUser.airlineId.push(airlineId)
+    if(dbUser.permissionLevel < 10) dbUser.permissionLevel = 10
     dbUser.save()
     message.channel.send("Verified!").then(m => deleteMessage(m, message))
     message.guild.channels.cache.get("863069139148341279").send(member.user.tag+" Force-verified as "+airlineName)

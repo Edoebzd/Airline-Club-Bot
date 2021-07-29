@@ -5,6 +5,7 @@ var prefix = "-"
 var client = new discord.Client({disableEveryone: false});
 const axios = require('axios');
 const config = require('./config.js');
+const db = require('./db.js');
 
 client.login(config.token)
 
@@ -44,14 +45,16 @@ client.on('message', async message => {
   console.log(Date.now() + "-" + message.author.id + "-" + cmd + "-" + args)
 
   const commandfile = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-  if(commandfile) commandfile.run(client, message, args);
+  if(commandfile) commandfile.run(client, message, args, db);
 
 });
 
 client.on('guildMemberAdd', member => {
   member.guild.channels.cache.get("863069139148341279").send(member.user.tag + " joined.")
+  db.users.create({discordId: member.user.id})
 })
 
 client.on('guildMemberRemove', member => {
   member.guild.channels.cache.get("863069139148341279").send(member.user.tag + " left.")
+  db.users.deleteOne({discordId: member.user.id})
 })

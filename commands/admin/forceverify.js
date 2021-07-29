@@ -1,5 +1,5 @@
 const init = require('../../init.js');
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args, db) => {
   if(!(message.author.id == 102949678185738240 || message.author.id == 222924725075050497 || message.author.id == 253877182739382274)) return message.channel.send("You can't use this command.").then(m => deleteMessage(m, message))
   if(!args[0]) return message.channel.send("Please provide a valid discord user Id.").then(m => deleteMessage(m, message))
   if(!args[1]) return message.channel.send("Please provide a valid airline name.").then(m => deleteMessage(m, message))
@@ -8,21 +8,26 @@ module.exports.run = async (bot, message, args) => {
   let member = members.get(userId)
   if(!member) return message.channel.send("Invalid user id.").then(m => deleteMessage(m, message))
   let airlineName = args.slice(1).join(" ")
-  let flag = false
+  let airlineId = -1
   init.airlines.forEach(a => {
-    if(a.name == airlineName) flag = true
+    if(a.name == airlineName) airlineId = a.id
   });
-  if(!flag) {
+  if(airlineId == -1) {
     let airlines = await init.updateAirlines()
     airlines.forEach(a => {
-      if(a.name == airlineName) flag = true
+      if(a.name == airlineName) airlineId = a.id
     });
-    if(!flag) return message.channel.send("Can't find this airline.").then(m => deleteMessage(m, message))
+    if(airlineId == -1) return message.channel.send("Can't find this airline.").then(m => deleteMessage(m, message))
   }
   await member.roles.add(message.guild.roles.cache.find(role => role.name == "Verified"), "Automatic forced-verification")
-  message.guild.channels.cache.get("863069139148341279").send(member.user.tag+" Force-verified as "+airlineName)
-  message.channel.send("Verified!").then(m => deleteMessage(m, message))
-
+  let dbUser = await db.users.findOne({discordId: userId})
+  if(dbUser.airlineId.indexOf(airlineId) != -1) message.channel.send("User already verified with airline '"+airlineName+"'").then(m => deleteMessage(m, message))
+  else {
+    dbUser.airlineId.push(airlineId)
+    dbUser.save()
+    message.channel.send("Verified!").then(m => deleteMessage(m, message))
+    message.guild.channels.cache.get("863069139148341279").send(member.user.tag+" Force-verified as "+airlineName)
+  }
 };
 
 function deleteMessage(m1, m2) {

@@ -41,12 +41,21 @@ module.exports.run = async (bot, message, args, permissionLevel, db) => {
             init.updateAirlines().then(airlines => {
               if(airlines[airlineId].slogan==randomString) {
                 message.member.roles.add(message.guild.roles.cache.find(role => role.name == verifiedRoleName), "Automatic verification")
-                .then(() => {
+                .then(async () => {
                   m.edit("Verified successfully as "+airlines[airlineId].name+". You can now change back your airline slogan.")
                   console.log(message.author.id + "-" + airlineId)
                   dbUser.airlineId.push(airlineId)
                   if(dbUser.permissionLevel < 10) dbUser.permissionLevel = 10
-                  dbUser.save()
+                  await dbUser.save()
+                  dbUser = await db.users.findOne({discordId: message.author.id})
+                  if(!dbUser.nickname) {
+                    let airlineNames = []
+                    dbUser.airlineId.forEach(airline => {
+                      if(airline.)
+                      airlineNames.push(init.airlines[airline].name)
+                    });
+                    message.member.setNickname(airlineNames.join("/"))
+                  }
                   message.guild.channels.cache.get("863069139148341279").send(message.author.tag+" Verified as "+airlines[airlineId].name)
                   message.delete()
                   serverMessage.delete()

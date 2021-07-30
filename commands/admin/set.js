@@ -19,6 +19,7 @@ module.exports.run = async (bot, message, args, permissionLevel, db) => {
     case "nickname":
       setNickname(dbUser, args[2])
       message.channel.send("Nickname set.").then(m => setTimeout(() => {m.delete(); message.delete()}, 5000))
+      member.setNickname(args[2])
       message.guild.channels.cache.get("863069139148341279").send(member.user.tag+" nickname set to "+args[2]+".")
       break;
     default:

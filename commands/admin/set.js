@@ -8,6 +8,7 @@ module.exports.run = async (bot, message, args, permissionLevel, db) => {
   let member = members.get(userId)
   if(!member) return message.channel.send("Invalid user id.").then(m => deleteMessage(m, message))
   let dbUser = await db.users.findOne({discordId: userId})
+  let fieldValue = args.slice(2).join(" ")
 
   switch (args[1]) {
     case "permissionLevel":
@@ -17,10 +18,10 @@ module.exports.run = async (bot, message, args, permissionLevel, db) => {
       message.guild.channels.cache.get("863069139148341279").send(member.user.tag+" permission level set to "+args[2]+".")
       break;
     case "nickname":
-      setNickname(dbUser, args[2])
+      setNickname(dbUser, fieldValue)
       message.channel.send("Nickname set.").then(m => setTimeout(() => {m.delete(); message.delete()}, 5000))
-      member.setNickname(args[2])
-      message.guild.channels.cache.get("863069139148341279").send(member.user.tag+" nickname set to "+args[2]+".")
+      member.setNickname(fieldValue)
+      message.guild.channels.cache.get("863069139148341279").send(member.user.tag+" nickname set to "+fieldValue+".")
       break;
     default:
       return message.channel.send("Invalid field.").then(m => setTimeout(() => {m.delete(); message.delete()}, 5000))

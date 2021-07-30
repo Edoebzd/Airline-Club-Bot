@@ -51,7 +51,6 @@ module.exports.run = async (bot, message, args, permissionLevel, db) => {
                   if(!dbUser.nickname) {
                     let airlineNames = []
                     dbUser.airlineId.forEach(airline => {
-                      if(airline.)
                       airlineNames.push(init.airlines[airline].name)
                     });
                     message.member.setNickname(airlineNames.join("/"))

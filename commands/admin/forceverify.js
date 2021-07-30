@@ -1,6 +1,6 @@
 const init = require('../../init.js');
 module.exports.run = async (bot, message, args, permissionLevel, db) => {
-  if(!(message.author.id == 102949678185738240 || message.author.id == 222924725075050497 || message.author.id == 253877182739382274)) return message.channel.send("You can't use this command.").then(m => deleteMessage(m, message))
+  if(permissionLevel < 50) return message.channel.send("You can't use this command.").then(m => deleteMessage(m, message))
   if(!args[0]) return message.channel.send("Please provide a valid discord user Id.").then(m => deleteMessage(m, message))
   if(!args[1]) return message.channel.send("Please provide a valid airline name.").then(m => deleteMessage(m, message))
   let userId = args[0]

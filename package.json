@@ -12,6 +12,6 @@
     "axios": "^0.21.1",
     "discord.js": "^12.5.3",
     "mongoose": "^5.13.4",
-    "nodemon": "^2.0.9"
+    "nodemon": "^2.0.20"
   }
 }
